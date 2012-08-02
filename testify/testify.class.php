@@ -154,8 +154,8 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assert($arg){
-		return $this->recordTest($arg == true);
+	public function assert($arg, $message = ''){
+		return $this->recordTest($arg == true, $message);
 	}
 	
 	/**
@@ -165,8 +165,8 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertFalse($arg){
-		return $this->recordTest($arg == false);
+	public function assertFalse($arg, $message = ''){
+		return $this->recordTest($arg == false, $message);
 	}
 	
 	/**
@@ -177,8 +177,8 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertEqual($arg1,$arg2){
-		return $this->recordTest($arg1 == $arg2);
+	public function assertEqual($arg1,$arg2, $message = ''){
+		return $this->recordTest($arg1 == $arg2, $message);
 	}
 	
 	/**
@@ -189,8 +189,8 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertIdentical($arg1,$arg2){
-		return $this->recordTest($arg1 === $arg2);
+	public function assertIdentical($arg1,$arg2, $message = ''){
+		return $this->recordTest($arg1 === $arg2, $message);
 	}
 	
 	/**
@@ -201,8 +201,8 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertInArray($arg, Array $arr){
-		return $this->recordTest( in_array($arg, $arr));
+	public function assertInArray($arg, Array $arr, $message = ''){
+		return $this->recordTest( in_array($arg, $arr), $message );
 	}
 	
 	/**
@@ -213,8 +213,8 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertNotInArray($arg, Array $arr){
-		return $this->recordTest( !in_array($arg, $arr));
+	public function assertNotInArray($arg, Array $arr, $message = ''){
+		return $this->recordTest( !in_array($arg, $arr), $message );
 	}
 	
 	/**
@@ -259,7 +259,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	private function recordTest($pass){
+	private function recordTest($pass, $message = ''){
 		
 		if(	!array_key_exists($this->currentTestCase, $this->stack) ||
 			!is_array($this->stack[$this->currentTestCase])){
@@ -275,7 +275,7 @@ class Testify{
 		
 		$result = $pass ? "pass" : "fail";
 		$this->stack[$this->currentTestCase]['tests'][] = array(
-			"type"		=> $bt[1]['function'],
+			"type"		=> ($message != '' ? $message : $bt[1]['function']),
 			"result"	=> $result,
 			"line"		=> $bt[1]['line'],
 			"file"		=> $bt[1]['file'],
