@@ -206,7 +206,7 @@
 								<span class="type <?php echo $test['result']?>"><?php echo $test['type']?></span>
 								<span class="line">line <?php echo $test['line']?></span>
 								<span class="file"><?php echo $test['file']?></span>
-								<div class="source"><?php echo htmlspecialchars($test['source'])?></div>
+								<div class="source"><?php echo $test['source']?></div>
 							</li>
 							
 						<?php } ?>

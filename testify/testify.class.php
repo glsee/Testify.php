@@ -279,7 +279,7 @@ class Testify{
 			"result"	=> $result,
 			"line"		=> $bt[1]['line'],
 			"file"		=> $bt[1]['file'],
-			"source"	=> (isset($message['source']) ? $message['source'] : $source)
+			"source"	=> (isset($message['source']) ? $message['source'] : '<code>'.htmlspecialchars($source).'</code>')
 		);
 		
 		$this->stack[$this->currentTestCase][$result]++;
