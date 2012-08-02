@@ -154,7 +154,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assert($arg, $message = ''){
+	public function assert($arg, $message = array()){
 		return $this->recordTest($arg == true, $message);
 	}
 	
@@ -165,7 +165,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertFalse($arg, $message = ''){
+	public function assertFalse($arg, $message = array()){
 		return $this->recordTest($arg == false, $message);
 	}
 	
@@ -177,7 +177,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertEqual($arg1,$arg2, $message = ''){
+	public function assertEqual($arg1,$arg2, $message = array()){
 		return $this->recordTest($arg1 == $arg2, $message);
 	}
 	
@@ -189,7 +189,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertIdentical($arg1,$arg2, $message = ''){
+	public function assertIdentical($arg1,$arg2, $message = array()){
 		return $this->recordTest($arg1 === $arg2, $message);
 	}
 	
@@ -201,7 +201,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertInArray($arg, Array $arr, $message = ''){
+	public function assertInArray($arg, Array $arr, $message = array()){
 		return $this->recordTest( in_array($arg, $arr), $message );
 	}
 	
@@ -213,7 +213,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	public function assertNotInArray($arg, Array $arr, $message = ''){
+	public function assertNotInArray($arg, Array $arr, $message = array()){
 		return $this->recordTest( !in_array($arg, $arr), $message );
 	}
 	
@@ -259,7 +259,7 @@ class Testify{
 	 * @return boolean
 	 */
 	
-	private function recordTest($pass, $message = ''){
+	private function recordTest($pass, $message = array()){
 		
 		if(	!array_key_exists($this->currentTestCase, $this->stack) ||
 			!is_array($this->stack[$this->currentTestCase])){
@@ -275,11 +275,11 @@ class Testify{
 		
 		$result = $pass ? "pass" : "fail";
 		$this->stack[$this->currentTestCase]['tests'][] = array(
-			"type"		=> ($message != '' ? $message : $bt[1]['function'].'()'),
+			"type"		=> (isset($message['function']) ? $message['function'] : $bt[1]['function'].'()'),
 			"result"	=> $result,
 			"line"		=> $bt[1]['line'],
 			"file"		=> $bt[1]['file'],
-			"source"	=> $source
+			"source"	=> (isset($message['source']) ? $message['source'] : $source)
 		);
 		
 		$this->stack[$this->currentTestCase][$result]++;
