@@ -275,7 +275,7 @@ class Testify{
 		
 		$result = $pass ? "pass" : "fail";
 		$this->stack[$this->currentTestCase]['tests'][] = array(
-			"type"		=> ($message != '' ? $message : $bt[1]['function']),
+			"type"		=> ($message != '' ? $message : $bt[1]['function'].'()'),
 			"result"	=> $result,
 			"line"		=> $bt[1]['line'],
 			"file"		=> $bt[1]['file'],
