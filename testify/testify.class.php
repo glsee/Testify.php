@@ -274,12 +274,23 @@ class Testify{
 		$bt[1]['file'] = basename($bt[1]['file']);
 		
 		$result = $pass ? "pass" : "fail";
+		
+		if (isset($message['source'])) {
+			$source = $message['source'];
+		} else {
+			$source = '<code>'.htmlspecialchars($source).'</code>';
+		}
+
+		if (!$pass && isset($message['output'])) {
+			$source .= '<br>Received output: <code>'.$message['output'].'</code>';
+		}
+
 		$this->stack[$this->currentTestCase]['tests'][] = array(
 			"type"		=> (isset($message['function']) ? $message['function'] : $bt[1]['function'].'()'),
 			"result"	=> $result,
 			"line"		=> $bt[1]['line'],
 			"file"		=> $bt[1]['file'],
-			"source"	=> (isset($message['source']) ? $message['source'] : '<code>'.htmlspecialchars($source).'</code>')
+			"source"	=> $source
 		);
 		
 		$this->stack[$this->currentTestCase][$result]++;
